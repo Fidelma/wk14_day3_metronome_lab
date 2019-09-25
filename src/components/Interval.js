@@ -6,7 +6,7 @@ const Interval = (props) => {
 
 
   function getBPM(event) {
-    console.log(event.target.value);
+    props.setBPM(event.target.value);
 
   }
 
