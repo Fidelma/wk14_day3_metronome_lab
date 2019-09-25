@@ -7,11 +7,14 @@ class MetronomeContainer extends Component {
   constructor(props) {
     super(props) ;
     this.state = {
-      bpm: null,
-      playing: false
+      bpm: 60,
+      playing: false,
+      timerID: null
+
     }
     this.setBPM = this.setBPM.bind(this);
-    this.setPlaying = this.setPlaying.bind(this);
+    this.startPlaying = this.startPlaying.bind(this);
+    this.togglePlay = this.togglePlay.bind(this);
 
   }
 
@@ -21,20 +24,40 @@ class MetronomeContainer extends Component {
       this.setState({bpm: bpm})
     }
 
-    setPlaying(audio) {
-      this.state.playing ? this.setState({playing: false}): this.setState({playing: true});
-      while(this.state.playing) {
-        audio.play()
-      }
-      // audio.paused ? audio.play() : audio.pause();
-      // window.setInterval(audio.play(), (60 / this.state.bpm * 1000));
-      // audio.classList.toggle('playing');
+    togglePlay(){
+      this.state.playing ? this.stopPlaying() : this.startPlaying()
+    }
+
+    startPlaying(){
+      const audio = new Audio('./swish.wav');
+      // audio.src = './MetronomeSound.m4a'
+      audio.play()
+      const delay = 60000/this.state.bpm;
+      const timerID = setTimeout(this.startPlaying, delay);
+      this.setState({playing: true, timerID})
 
     }
-    playMetronome() {
-      var intervalID = setInterval(this.setPlaying, ((60 / this.state.bpm) * 1000));
+
+    stopPlaying(){
+      this.setState({playing: false});
+      clearTimeout(this.state.timerID);
 
     }
+
+    // setPlaying(audio) {
+    //   this.state.playing ? this.setState({playing: false}): this.setState({playing: true});
+    //   if(this.state.playing) {
+    //     // const timer = setTimeout(audio.play(),6000/this.state.bpm)
+    //   }
+    //   audio.paused ? audio.play() : audio.pause();
+    //   window.setInterval(audio.play(), (60 / this.state.bpm * 1000));
+    //   audio.classList.toggle('playing');
+    //
+    // }
+    // playMetronome() {
+    //   var intervalID = setInterval(this.setPlaying, ((60 / this.state.bpm) * 1000));
+    //
+    // }
 
 
 
@@ -42,10 +65,10 @@ class MetronomeContainer extends Component {
 
   render() {
     return(
-      <>
+      <div>
       <Interval setBPM={this.setBPM}/>
-      <PlayStop setPlaying={this.setPlaying}/>
-      </>
+      <PlayStop togglePlay={this.togglePlay}/>
+      </div>
 
     )
   }

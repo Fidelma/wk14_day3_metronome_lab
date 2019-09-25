@@ -14,7 +14,7 @@ const Interval = (props) => {
       <>
       <div>
 
-      <input onChange={getBPM} type='range' id='interval' name='bpm' min='0' max='220'>
+      <input onChange={getBPM} type='range'default='60' id='interval' name='bpm' min='1' max='220'>
       </input>
       <label htmlFor='bpm'>BPM</label>
       </div>

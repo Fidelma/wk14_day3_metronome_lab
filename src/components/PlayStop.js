@@ -7,14 +7,10 @@ render() {
 
 return(
   <>
-  <button onClick={() => {this.props.setPlaying(this.audio)}} type='button' name='playStop'>Play</button>
-  <audio
-  ref={(audio) => this.audio = audio}
-  src='./MetronomeSound.m4a'/>
+  <button onClick={this.props.togglePlay} type='button' name='playStop'>Play</button>
   </>
-)
-
-}
+ )
+ }
 }
 
 export default PlayStop;
